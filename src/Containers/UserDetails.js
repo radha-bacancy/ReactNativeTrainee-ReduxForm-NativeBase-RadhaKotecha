@@ -22,7 +22,7 @@ let UserDetails = (props) => {
     return(
 
         <View style={styles.container}>
-            <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
+            <Card style={{padding:10, borderRadius: 5}}>
 
                 <ScrollView>
                     <Field
@@ -46,7 +46,6 @@ let UserDetails = (props) => {
                         placeholder='Address'
                         validate={validate.required}
                         multiline = {true}
-                        numberOfLines = {6}
                     />
 
                     <Field

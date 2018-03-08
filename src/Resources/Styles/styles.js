@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 12,
-        justifyContent: 'space-between',
         flex: 1
     },
     header: {
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
     },
     btn:{
         alignItems: 'center',
-        padding: 5,
+        padding: 15,
         borderWidth: 0.5,
         width: 100,
         borderRadius: 3,
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
     },
     btnContainer:{
         alignItems: 'center',
+        padding: 10
     }
 });
 
