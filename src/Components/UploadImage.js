@@ -6,7 +6,7 @@ import styles from '.././Resources/Styles/styles';
 
 let source;
 
-const UploadImage = ({meta: {touched, error, warning}}) => {
+const UploadImage = ({input:{ value }, meta: {touched, error, warning}}) => {
 
     const _uploadPic = () => {
 
@@ -32,7 +32,8 @@ const UploadImage = ({meta: {touched, error, warning}}) => {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                source = { uri: response.uri };
+                value = { uri: response.uri };
+                source = value;
             }
         });
     };

@@ -20,7 +20,7 @@ let ProfilePicture = (props) => {
             <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
 
                 <View>
-                    <Field name='ProfilePic' component={UploadImage} type='file'/>
+                    <Field name='ProfilePic' component={UploadImage} type='img'/>
                 </View>
 
                 <Btn onPress={handleSubmit(_submit)}> Next </Btn>

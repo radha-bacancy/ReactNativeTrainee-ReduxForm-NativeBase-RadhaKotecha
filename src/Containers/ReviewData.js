@@ -23,45 +23,48 @@ const ReviewData = (props) => {
     return(
 
         <View style={styles.container}>
+            <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
 
-            <View>
-                <View style={{flexDirection: 'row'}}>
-                    <Text>First Name : </Text>
-                    <Text>{x.form.ReactNativeTest.values.FirstName}</Text>
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>First Name : </Text>
+                        <Text>{x.form.ReactNativeTest.values.FirstName}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Last Name : </Text>
+                        <Text>{x.form.ReactNativeTest.values.LastName}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Address     : </Text>
+                        <Text>{x.form.ReactNativeTest.values.Address}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>City              : </Text>
+                        <Text>{x.form.ReactNativeTest.values.City}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Age Range : </Text>
+                        <Text>{x.form.ReactNativeTest.values.Age}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Gender        : </Text>
+                        <Text>{x.form.ReactNativeTest.values.Gender}</Text>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Email           : </Text>
+                        <Text>{x.form.ReactNativeTest.values.Email}</Text>
+                    </View>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
-                    <Text>Last Name : </Text>
-                    <Text>{x.form.ReactNativeTest.values.LastName}</Text>
-                </View>
+                <Btn onPress={handleSubmit(_submit)}> Submit </Btn>
 
-                <View style={{flexDirection: 'row'}}>
-                    <Text>Address     : </Text>
-                    <Text>{x.form.ReactNativeTest.values.Address}</Text>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Text>City              : </Text>
-                    <Text>{x.form.ReactNativeTest.values.City}</Text>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Text>Age Range : </Text>
-                    <Text>{x.form.ReactNativeTest.values.Age}</Text>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Text>Gender        : </Text>
-                    <Text>{x.form.ReactNativeTest.values.Gender}</Text>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                    <Text>Email           : </Text>
-                    <Text>{x.form.ReactNativeTest.values.Email}</Text>
-                </View>
-            </View>
-
-            <Btn onPress={handleSubmit(_submit)}> Submit </Btn>
+            </Card>
 
         </View>
     );

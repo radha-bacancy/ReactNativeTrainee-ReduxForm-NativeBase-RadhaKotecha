@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
+import { Card } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import TextBox from '../Components/TextBox';
 import Btn from '../Components/Btn';
@@ -19,43 +20,45 @@ const LoginCredentials = (props) => {
 
     return(
         <View style={styles.container}>
-
-            <View>
-                <View>
-                    <Field
-                        name='Email'
-                        component={TextBox}
-                        placeholder = 'Email Id'
-                        validate={[validate.email, validate.required]}
-                        warn={warn.aol}
-                    />
-                </View>
+            <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
 
                 <View>
-                    <Field
-                        name='Password'
-                        component={TextBox}
-                        secureTextEntry={true}
-                        placeholder = 'Password'
-                        type='text'
-                        validate={[validate.required, validate.password]}
-                    />
+                    <View>
+                        <Field
+                            name='Email'
+                            component={TextBox}
+                            placeholder = 'Email Id'
+                            validate={[validate.email, validate.required]}
+                            warn={warn.aol}
+                        />
+                    </View>
+
+                    <View>
+                        <Field
+                            name='Password'
+                            component={TextBox}
+                            secureTextEntry={true}
+                            placeholder = 'Password'
+                            type='text'
+                            validate={[validate.required, validate.password]}
+                        />
+                    </View>
+
+                    <View>
+                        <Field
+                            name='ConfirmPassword'
+                            component={TextBox}
+                            secureTextEntry={true}
+                            placeholder = 'Confirm Password'
+                            type='text'
+                            validate={[validate.required, validate.confirmPassword]}
+                        />
+                    </View>
                 </View>
 
-                <View>
-                    <Field
-                        name='ConfirmPassword'
-                        component={TextBox}
-                        secureTextEntry={true}
-                        placeholder = 'Confirm Password'
-                        type='text'
-                        validate={[validate.required, validate.confirmPassword]}
-                    />
-                </View>
-            </View>
+                <Btn onPress={handleSubmit(_submit)}> Next </Btn>
 
-            <Btn onPress={handleSubmit(_submit)}> Next </Btn>
-
+            </Card>
         </View>
     );
 };
