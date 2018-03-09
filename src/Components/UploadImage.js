@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Text, View, Thumbnail } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 import styles from '../Resources/Styles/styles';
-import store from '../Redux/Store';
 
 class UploadImage extends Component {
 
