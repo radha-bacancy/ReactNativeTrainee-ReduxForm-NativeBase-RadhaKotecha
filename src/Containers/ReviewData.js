@@ -1,26 +1,30 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { View, Text, AsyncStorage, ToastAndroid, ScrollView } from 'react-native';
 import { Card, Thumbnail } from 'native-base';
-import store from '../Redux/Store'
 import styles from '../Resources/Styles/styles'
 import Btn from "../Components/Btn";
 import { Actions } from 'react-native-router-flux'
 import { reduxForm } from 'redux-form';
-
-const _submit = () => {
-    ToastAndroid.showWithGravity(
-        'Sign Up Successful',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-    );
-    AsyncStorage.setItem('userData', JSON.stringify(store.getState().form.ReactNativeTest.values));
-    Actions.UserDetails()
-};
+import * as actions from "../Redux/Actions";
 
 const ReviewData = (props) => {
+
+    const _submit = () => {
+        ToastAndroid.showWithGravity(
+            'Sign Up Successful',
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+        );
+        AsyncStorage.setItem('userData', JSON.stringify(props.user));
+        Actions.UserDetails()
+    };
+
     const { handleSubmit } = props;
-    const x = store.getState();
-    let userData = x.form.ReactNativeTest.values;
+
+    const { FirstName, LastName, Address, Gender, Age, City, ProfilePic, Email } = props.user;
+
     return(
 
         <View style={styles.container}>
@@ -31,7 +35,7 @@ const ReviewData = (props) => {
                     <View style={{padding: 10}}>
                         <Thumbnail
                             large
-                            source={userData.ProfilePic}
+                            source={ProfilePic}
                             style={{
                                 borderRadius: 95,
                                 width: 85,
@@ -43,40 +47,40 @@ const ReviewData = (props) => {
                     <View>
                         <View style={{flexDirection: 'row'}}>
                             <Text>First Name : </Text>
-                            <Text>{userData.FirstName}</Text>
+                            <Text>{FirstName}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Last Name : </Text>
-                            <Text>{userData.LastName}</Text>
+                            <Text>{LastName}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Address     : </Text>
                             <ScrollView>
-                                <Text>{userData.Address}</Text>
+                                <Text>{Address}</Text>
                             </ScrollView>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>City              : </Text>
-                            <Text>{userData.City}</Text>
+                            <Text>{City}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Age Range : </Text>
-                            <Text>{userData.Age}</Text>
+                            <Text>{Age}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Gender        : </Text>
-                            <Text>{userData.Gender}</Text>
+                            <Text>{Gender}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Email           : </Text>
                             <ScrollView>
-                                <Text>{userData.Email}</Text>
+                                <Text>{Email}</Text>
                             </ScrollView>
                         </View>
                     </View>
@@ -90,8 +94,20 @@ const ReviewData = (props) => {
     );
 };
 
-export default reduxForm({
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        form: state.form
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'ReactNativeTest',
-    destroyOnUnmount: true,
+    destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-})(ReviewData)
+})(ReviewData));

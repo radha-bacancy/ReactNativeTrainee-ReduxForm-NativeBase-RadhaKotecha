@@ -12,7 +12,7 @@ const DropDown = ({
             <View>
                 <Picker
                     selectedValue={value}
-                    onValueChange={onChange.bind(this)}
+                     onValueChange={onChange.bind(this)}
                 >
                     {
                         options.map((opt, index) => (

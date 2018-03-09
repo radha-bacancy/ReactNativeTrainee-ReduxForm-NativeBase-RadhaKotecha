@@ -1,4 +1,6 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import { Card } from 'native-base';
@@ -8,10 +10,10 @@ import Btn from '../Components/Btn';
 import * as  validate from './validate';
 import * as warn from './warn'
 import styles from '../Resources/Styles/styles';
+import * as actions from "../Redux/Actions";
 
 let _submit = (values) => {
-    console.warn(values);
-
+    actions._addLoginCredentials(values);
     Actions.ReviewData()
 };
 
@@ -63,8 +65,20 @@ const LoginCredentials = (props) => {
     );
 };
 
-export default reduxForm({
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        form: state.form
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'ReactNativeTest',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-})(LoginCredentials)
+})(LoginCredentials));

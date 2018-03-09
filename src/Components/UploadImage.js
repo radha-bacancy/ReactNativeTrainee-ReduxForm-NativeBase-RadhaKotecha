@@ -7,20 +7,6 @@ import store from '../Redux/Store';
 
 class UploadImage extends Component {
 
-    async componentWillMount(){
-        let x = store.getState();
-        let userData = x.form.ReactNativeTest.values;
-        if(userData.ProfilePic !== undefined) {
-            if (JSON.parse(await AsyncStorage.getItem('userData')) !== '' &&
-                JSON.parse(await AsyncStorage.getItem('userData')) !== undefined) {
-                let user = JSON.parse(await AsyncStorage.getItem('userData'));
-                this.setState({
-                    source: user.ProfilePic
-                })
-            }
-        }
-    };
-
     constructor(props) {
         super(props);
 
@@ -63,8 +49,8 @@ class UploadImage extends Component {
 
     render(){
 
-        const {meta: {touched, error, warning}} = this.props;
-
+        const {meta: {touched, error, warning}, input: {value}} = this.props;
+        console.warn(value);
         return(
             <View>
                 <View style={{
@@ -82,11 +68,11 @@ class UploadImage extends Component {
                             alignItems: 'center',
                             marginBottom: 20
                         }}>
-                            { ( this.state.source === '' || this.state.source === undefined )
+                            { ( value === '' || value === undefined )
                                 ? <Text>Select a Photo</Text>
                                 : <Thumbnail
                                     large
-                                    source={this.state.source}
+                                    source={value}
                                     style={{
                                         borderRadius: 95,
                                         width: 150,

@@ -1,17 +1,21 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { Card } from 'native-base'
-import { Field, reduxForm } from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
 import TextBox from '../Components/TextBox';
 import RadioButton from "../Components/RadioButton";
 import DropDown from "../Components/DropDown";
 import { Actions } from 'react-native-router-flux';
 import Btn from '../Components/Btn';
-import * as validate from './validate'
-import styles from '.././Resources/Styles/styles'
+import * as validate from './validate';
+import styles from '.././Resources/Styles/styles';
+import * as actions from '../Redux/Actions';
+
 
 let _submit = (values) => {
-    console.warn(values);
+    actions._addUserDetails(values);
     Actions.ProfilePicture()
 };
 
@@ -99,8 +103,19 @@ let UserDetails = (props) => {
     );
 };
 
-export default reduxForm({
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        form: state.form
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'ReactNativeTest',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-})(UserDetails)
+})(UserDetails));
