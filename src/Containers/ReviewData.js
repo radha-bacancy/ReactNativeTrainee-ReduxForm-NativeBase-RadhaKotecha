@@ -13,83 +13,70 @@ const _submit = () => {
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,
     );
-    AsyncStorage.setItem('userData', JSON.stringify(store.getState().form.ReactNativeTest.values))
+    AsyncStorage.setItem('userData', JSON.stringify(store.getState().form.ReactNativeTest.values));
     Actions.UserDetails()
 };
 
 const ReviewData = (props) => {
     const { handleSubmit } = props;
     const x = store.getState();
-
+    let userData = x.form.ReactNativeTest.values;
     return(
 
         <View style={styles.container}>
             <Card style={{padding:10, borderRadius: 5, alignItems: 'center'}}>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', flex: 1}}>
 
                     <View style={{padding: 10}}>
-                        { (
-                            x.form.ReactNativeTest.values.ProfilePic === '' ||
-                            x.form.ReactNativeTest.values.ProfilePic === undefined
-                        )
-                            ? <View style={{ borderRadius: 100, width: 85, height: 85, borderWidth: 0.5 }}/>
-                            : <Thumbnail
-                                large
-                                source={x.form.ReactNativeTest.values.ProfilePic}
-                                style={{
-                                    borderRadius: 95,
-                                    width: 150,
-                                    height: 150
-                                }}/>
-                        }
+                        <Thumbnail
+                            large
+                            source={userData.ProfilePic}
+                            style={{
+                                borderRadius: 95,
+                                width: 85,
+                                height: 85,
+                            }}
+                        />
                     </View>
 
                     <View>
                         <View style={{flexDirection: 'row'}}>
                             <Text>First Name : </Text>
-                            <Text>{x.form.ReactNativeTest.values.FirstName}</Text>
+                            <Text>{userData.FirstName}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Last Name : </Text>
-                            <Text>
-                                { (
-                                    x.form.ReactNativeTest.values.LastName === '' ||
-                                    x.form.ReactNativeTest.values.LastName === undefined
-                                )
-                                    ? <Text/>
-                                    : <Text>{x.form.ReactNativeTest.values.LastName}</Text>
-                                }
-                                </Text>
+                            <Text>{userData.LastName}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Address     : </Text>
                             <ScrollView>
-                                <Text>{x.form.ReactNativeTest.values.Address}</Text>
+                                <Text>{userData.Address}</Text>
                             </ScrollView>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>City              : </Text>
-                            <Text>{x.form.ReactNativeTest.values.City}</Text>
+                            <Text>{userData.City}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Age Range : </Text>
-                            <Text>{x.form.ReactNativeTest.values.Age}</Text>
+                            <Text>{userData.Age}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Gender        : </Text>
-                            <Text>{x.form.ReactNativeTest.values.Gender}</Text>
+                            <Text>{userData.Gender}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
                             <Text>Email           : </Text>
                             <ScrollView>
-                                <Text>{x.form.ReactNativeTest.values.Email}</Text>
+                                <Text>{userData.Email}</Text>
                             </ScrollView>
                         </View>
                     </View>

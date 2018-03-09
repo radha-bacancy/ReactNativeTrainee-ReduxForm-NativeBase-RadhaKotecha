@@ -1,14 +1,35 @@
-import React from 'react';
-import { TouchableOpacity, } from 'react-native';
+import React, { Component } from 'react';
+import { TouchableOpacity, AsyncStorage } from 'react-native';
 import { Text, View, Thumbnail } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
-import styles from '.././Resources/Styles/styles';
+import styles from '../Resources/Styles/styles';
+import store from '../Redux/Store';
 
-let source;
+class UploadImage extends Component {
 
-const UploadImage = ({input:{ src }, meta: {touched, error, warning}}) => {
+    async componentWillMount(){
+        let x = store.getState();
+        let userData = x.form.ReactNativeTest.values;
+        if(userData.ProfilePic !== undefined) {
+            if (JSON.parse(await AsyncStorage.getItem('userData')) !== '' &&
+                JSON.parse(await AsyncStorage.getItem('userData')) !== undefined) {
+                let user = JSON.parse(await AsyncStorage.getItem('userData'));
+                this.setState({
+                    source: user.ProfilePic
+                })
+            }
+        }
+    };
 
-    const _uploadPic = () => {
+    constructor(props) {
+        super(props);
+
+        this.state={
+            source:'',
+        }
+    }
+
+    _uploadPic = () => {
 
         const options = {
             quality: 1.0,
@@ -32,53 +53,60 @@ const UploadImage = ({input:{ src }, meta: {touched, error, warning}}) => {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                src = { uri: response.uri };
-                source = src;
+                this.setState({
+                    source: { uri: response.uri }
+                });
+                this.props.input.onChange(this.state.source)
             }
         });
     };
 
-    return(
-        <View>
-            <View style={{
-                paddingTop: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                <TouchableOpacity onPress={_uploadPic}>
-                    <View style={{
-                        borderWidth: 0.5,
-                        borderRadius: 95,
-                        width: 150,
-                        height: 150,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}>
-                        { ( source === '' || source === undefined )
-                            ? <Text>Select a Photo</Text>
-                            : <Thumbnail
-                                large
-                                source={source}
-                                style={{
-                                    borderRadius: 95,
-                                    width: 150,
-                                    height: 150
-                                }}/>
-                        }
-                    </View>
-                </TouchableOpacity>
-            </View>
+    render(){
 
+        const {meta: {touched, error, warning}} = this.props;
+
+        return(
             <View>
-                {
-                    touched && (
-                        (error && <Text style={styles.errorText}>{error}</Text>) ||
-                        (warning && <Text style={styles.warnText}>{warning}</Text>))
-                }
+                <View style={{
+                    paddingTop: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <TouchableOpacity onPress={this._uploadPic}>
+                        <View style={{
+                            borderWidth: 0.5,
+                            borderRadius: 95,
+                            width: 150,
+                            height: 150,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: 20
+                        }}>
+                            { ( this.state.source === '' || this.state.source === undefined )
+                                ? <Text>Select a Photo</Text>
+                                : <Thumbnail
+                                    large
+                                    source={this.state.source}
+                                    style={{
+                                        borderRadius: 95,
+                                        width: 150,
+                                        height: 150
+                                    }}/>
+                            }
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View>
+                    {
+                        touched && (
+                            (error && <Text style={styles.errorText}>{error}</Text>) ||
+                            (warning && <Text style={styles.warnText}>{warning}</Text>))
+                    }
+                </View>
             </View>
-        </View>
-    );
-};
+        );
+    };
+}
 
 export default UploadImage

@@ -17,7 +17,6 @@ const Main = () => {
                     key="UserDetails"
                     component={UserDetails}
                     title="User Details"
-                    initial
                 />
                 <Scene
                     key="ProfilePicture"
