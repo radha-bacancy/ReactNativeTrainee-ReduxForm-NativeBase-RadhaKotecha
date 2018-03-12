@@ -24,5 +24,6 @@ export const _addLoginCredentials = (values) => {
         type: 'ADD_LOGIN_CREDENTIALS',
         Email: values.Email,
         Password: values.Password,
+        ConfirmPassword: values.ConfirmPassword
     })
 };

@@ -23,6 +23,7 @@ const user = ( state = [], action ) => {
                 ...state,
                 Email: action.Email,
                 Password: action.Password,
+                ConfirmPassword: action.ConfirmPassword
             };
         default:
             return state;

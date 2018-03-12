@@ -9,6 +9,7 @@ import { Actions } from 'react-native-router-flux';
 import { Card } from 'native-base'
 import styles from '../Resources/Styles/styles';
 import * as actions from "../Redux/Actions";
+import * as validate from './validate';
 
 let _submit = (values) => {
     actions._addProfilePicture(values);
@@ -16,16 +17,17 @@ let _submit = (values) => {
 };
 
 let ProfilePicture = (props) => {
-    const { handleSubmit } = props;
+    const { handleSubmit, invalid, pristine, submitting } = props;
+
     return(
         <View style={styles.container}>
             <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
 
                 <View>
-                    <Field name='ProfilePic' component={UploadImage}/>
+                    <Field name='ProfilePic' component={UploadImage} validate={validate.required}/>
                 </View>
 
-                <Btn onPress={handleSubmit(_submit)}> Next </Btn>
+                <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
 
             </Card>
         </View>

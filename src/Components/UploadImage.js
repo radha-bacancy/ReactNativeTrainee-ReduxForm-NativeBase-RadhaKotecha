@@ -26,7 +26,6 @@ class UploadImage extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled photo picker');
@@ -49,7 +48,6 @@ class UploadImage extends Component {
     render(){
 
         const {meta: {touched, error, warning}, input: {value}} = this.props;
-        console.warn(value);
         return(
             <View>
                 <View style={{

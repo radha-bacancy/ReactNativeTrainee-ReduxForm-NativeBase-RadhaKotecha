@@ -17,8 +17,10 @@ let _submit = (values) => {
     Actions.ReviewData()
 };
 
+let check = true;
+
 const LoginCredentials = (props) => {
-    const { handleSubmit } = props;
+    const { handleSubmit, invalid, pristine, submitting } = props;
 
     return(
         <View style={styles.container}>
@@ -58,7 +60,7 @@ const LoginCredentials = (props) => {
                     </View>
                 </View>
 
-                <Btn onPress={handleSubmit(_submit)}> Next </Btn>
+                <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
 
             </Card>
         </View>

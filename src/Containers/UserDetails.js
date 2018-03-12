@@ -21,7 +21,7 @@ let _submit = (values) => {
 
 let UserDetails = (props) => {
 
-    const { handleSubmit } = props;
+    const { handleSubmit, pristine, submitting, invalid } = props;
 
     return(
 
@@ -96,7 +96,7 @@ let UserDetails = (props) => {
 
                 </ScrollView>
 
-                <Btn onPress={handleSubmit(_submit)}> Next </Btn>
+                <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
 
             </Card>
         </View>

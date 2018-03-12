@@ -5,7 +5,7 @@ import styles from '../Resources/Styles/styles'
 const Btn = (props) => {
     return(
         <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={props.onPress}>
+            <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
                 <View style={styles.btn}>
                     <Text style={{color: '#000'}}> {props.children} </Text>
                 </View>
