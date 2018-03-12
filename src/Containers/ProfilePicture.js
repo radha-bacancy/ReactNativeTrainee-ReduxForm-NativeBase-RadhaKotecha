@@ -11,12 +11,12 @@ import styles from '../Resources/Styles/styles';
 import * as actions from "../Redux/Actions";
 import * as validate from './validate';
 
-let _submit = (values) => {
+const _submit = (values) => {
     actions._addProfilePicture(values);
     Actions.LoginCredentials()
 };
 
-let ProfilePicture = (props) => {
+const ProfilePicture = (props) => {
     const { handleSubmit, invalid, pristine, submitting } = props;
 
     return(

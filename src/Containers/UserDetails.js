@@ -14,12 +14,12 @@ import styles from '.././Resources/Styles/styles';
 import * as actions from '../Redux/Actions';
 
 
-let _submit = (values) => {
+const _submit = (values) => {
     actions._addUserDetails(values);
     Actions.ProfilePicture()
 };
 
-let UserDetails = (props) => {
+const UserDetails = (props) => {
 
     const { handleSubmit, pristine, submitting, invalid } = props;
 

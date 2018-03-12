@@ -12,12 +12,10 @@ import * as warn from './warn'
 import styles from '../Resources/Styles/styles';
 import * as actions from "../Redux/Actions";
 
-let _submit = (values) => {
+const _submit = (values) => {
     actions._addLoginCredentials(values);
     Actions.ReviewData()
 };
-
-let check = true;
 
 const LoginCredentials = (props) => {
     const { handleSubmit, invalid, pristine, submitting } = props;
