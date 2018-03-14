@@ -8,17 +8,51 @@ import Btn from "../Components/Btn";
 import { Actions } from 'react-native-router-flux'
 import { reduxForm } from 'redux-form';
 import * as actions from "../Redux/Actions";
+import firebase from 'react-native-firebase';
+
+const androidConfig = {
+    clientId: '999827385879-600phkhqg5t13hidv2kq3o74odgnoalu.apps.googleusercontent.com',
+    appId: '1:999827385879:android:b18f7074e328c7d5',
+    apiKey: 'AIzaSyAH6ehaz030E7kVc639y0T7up3LGj2-ONU',
+    databaseURL: 'https://reactnativetest-293b3.firebaseio.com/',
+    storageBucket: 'reactnativetest-293b3.appspot.com',
+    messagingSenderId: '999827385879',
+    projectId: 'reactnativetest-293b3',
+    persistence: true,
+};
+
+const rootRef = firebase.database().ref();
+const dataRef = rootRef.child('Users');
 
 const ReviewData = (props) => {
 
-    const _submit = () => {
-        ToastAndroid.showWithGravity(
-            'Sign Up Successful',
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-        );
-        AsyncStorage.setItem('userData', JSON.stringify(props.user));
-        Actions.UserDetails()
+    const _submit = (values) => {
+
+        firebase.auth().createUserWithEmailAndPassword(values.Email, values.Password)
+            .then((usr) => {
+                console.log(usr);
+                dataRef.child(usr.uid).set({
+                    FirstName: values.FirstName,
+                    LastName: values.LastName,
+                    Address: values.Address,
+                    Gender: values.Gender,
+                    Age: values.Age,
+                    City: values.City,
+                    ProfilePic: values.ProfilePic,
+                    Email: values.Email,
+                });
+
+                ToastAndroid.showWithGravity(
+                    'Sign Up Successful',
+                    ToastAndroid.LONG,
+                    ToastAndroid.BOTTOM,
+                );
+                AsyncStorage.setItem('userData', JSON.stringify(usr));
+                Actions.UserDetails()
+            })
+            .catch((err) => {
+                console.warn('err', err)
+            });
     };
 
     const { handleSubmit } = props;

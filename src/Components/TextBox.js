@@ -14,7 +14,7 @@ const TextBox = ({
     return <View style={{padding: 1}}>
         <View>
             <Item floatingLabel>
-                <Label>{placeholder}</Label>
+                <Label style={{fontSize: 14}}>{placeholder}</Label>
                 <Input
                     style={{justifyContent: 'flex-start'}}
                     underlineColorAndroid='transparent'

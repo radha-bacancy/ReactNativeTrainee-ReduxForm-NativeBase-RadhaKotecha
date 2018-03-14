@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "999827385879",
+    "firebase_url": "https://reactnativetest-293b3.firebaseio.com",
+    "project_id": "reactnativetest-293b3",
+    "storage_bucket": "reactnativetest-293b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999827385879:android:b18f7074e328c7d5",
+        "android_client_info": {
+          "package_name": "com.rnt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999827385879-600phkhqg5t13hidv2kq3o74odgnoalu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH6ehaz030E7kVc639y0T7up3LGj2-ONU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

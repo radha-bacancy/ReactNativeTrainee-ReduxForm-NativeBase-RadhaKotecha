@@ -4,15 +4,29 @@ import UserDetails from './src/Containers/UserDetails';
 import ProfilePicture from './src/Containers/ProfilePicture';
 import LoginCredentials from './src/Containers/LoginCredentials';
 import ReviewData from './src/Containers/ReviewData';
+import Login from './src/Containers/Login'
+import Home from './src/Containers/Home'
 import styles from './src/Resources/Styles/styles'
 
 const Main = () => {
+
     return (
         <Router
             navigationBarStyle={styles.header}
             titleStyle={styles.navTitle}
         >
             <Scene key='root'>
+                <Scene
+                    key="Login"
+                    component={Login}
+                    title="Login"
+                    initial
+                />
+                <Scene
+                    key="Home"
+                    component={Home}
+                    title="Home"
+                />
                 <Scene
                     key="UserDetails"
                     component={UserDetails}
@@ -37,5 +51,4 @@ const Main = () => {
         </Router>
     );
 };
-
 export default Main
