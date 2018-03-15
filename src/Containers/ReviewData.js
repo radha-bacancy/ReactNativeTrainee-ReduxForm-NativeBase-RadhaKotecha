@@ -9,6 +9,7 @@ import { Actions } from 'react-native-router-flux'
 import { reduxForm } from 'redux-form';
 import * as actions from "../Redux/Actions";
 import firebase from 'react-native-firebase';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const androidConfig = {
     clientId: '999827385879-600phkhqg5t13hidv2kq3o74odgnoalu.apps.googleusercontent.com',
@@ -21,38 +22,77 @@ const androidConfig = {
     persistence: true,
 };
 
+firebase.initializeApp(androidConfig);
+
 const rootRef = firebase.database().ref();
 const dataRef = rootRef.child('Users');
 
+const storage = firebase.storage();
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
+
 const ReviewData = (props) => {
+
+    const _uploadImage = ( uri, mime = 'img/jpg') => {
+        return new Promise((resolve, reject) =>{
+            const uploadUri = uri;
+            const sessionId = new Date().getTime();
+            const imageRef = storage.ref('images').child(`${sessionId}.jpg`);
+            console.log(uploadUri.uri);
+
+            fs.readFile(uploadUri.uri, 'base64')
+                .then(() => {
+                    return imageRef.put(uploadUri.uri, {contentType: mime})
+                })
+                .then(() => {
+                    return imageRef.getDownloadURL()
+                })
+                .then((url) => {
+                    resolve(url)
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject(error)
+                })
+        })
+    };
 
     const _submit = (values) => {
 
         firebase.auth().createUserWithEmailAndPassword(values.Email, values.Password)
             .then((usr) => {
-                console.log(usr);
-                dataRef.child(usr.uid).set({
-                    FirstName: values.FirstName,
-                    LastName: values.LastName,
-                    Address: values.Address,
-                    Gender: values.Gender,
-                    Age: values.Age,
-                    City: values.City,
-                    ProfilePic: values.ProfilePic,
-                    Email: values.Email,
-                });
+                _uploadImage(values.ProfilePic)
+                    .then((url) => {
+                        dataRef.child(usr.uid).set({
+                            FirstName: values.FirstName,
+                            LastName: values.LastName,
+                            Address: values.Address,
+                            Gender: values.Gender,
+                            Age: values.Age,
+                            City: values.City,
+                            Email: values.Email,
+                            ProfilePic: url
+                        });
 
-                ToastAndroid.showWithGravity(
-                    'Sign Up Successful',
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                );
-                AsyncStorage.setItem('userData', JSON.stringify(usr));
-                Actions.UserDetails()
-            })
+                        ToastAndroid.showWithGravity(
+                            'Sign Up Successful',
+                            ToastAndroid.LONG,
+                            ToastAndroid.BOTTOM,
+                        );
+                        AsyncStorage.setItem('userData', JSON.stringify(usr));
+                        Actions.UserDetails()
+                    })
+                    .catch((err) => {
+                        console.warn('err', err)
+                    });
+                })
             .catch((err) => {
-                console.warn('err', err)
+                alert(err)
             });
+
     };
 
     const { handleSubmit } = props;
@@ -64,63 +104,61 @@ const ReviewData = (props) => {
         <View style={styles.container}>
             <Card style={{padding:10, borderRadius: 5, alignItems: 'center'}}>
 
-                <View style={{flexDirection: 'row', flex: 1}}>
+                <View style={{padding: 10}}>
+                    <Thumbnail
+                        large
+                        source={ProfilePic}
+                        style={{
+                            borderRadius: 95,
+                            width: 85,
+                            height: 85,
+                        }}
+                    />
+                </View>
 
-                    <View style={{padding: 10}}>
-                        <Thumbnail
-                            large
-                            source={ProfilePic}
-                            style={{
-                                borderRadius: 95,
-                                width: 85,
-                                height: 85,
-                            }}
-                        />
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>First Name : </Text>
+                        <Text>{FirstName}</Text>
                     </View>
 
-                    <View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>First Name : </Text>
-                            <Text>{FirstName}</Text>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Last Name : </Text>
+                        <Text>{LastName}</Text>
+                    </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>Last Name : </Text>
-                            <Text>{LastName}</Text>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Address     : </Text>
+                        <ScrollView>
+                            <Text>{Address}</Text>
+                        </ScrollView>
+                    </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>Address     : </Text>
-                            <ScrollView>
-                                <Text>{Address}</Text>
-                            </ScrollView>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>City              : </Text>
+                        <Text>{City}</Text>
+                    </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>City              : </Text>
-                            <Text>{City}</Text>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Age Range : </Text>
+                        <Text>{Age}</Text>
+                    </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>Age Range : </Text>
-                            <Text>{Age}</Text>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Gender        : </Text>
+                        <Text>{Gender}</Text>
+                    </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>Gender        : </Text>
-                            <Text>{Gender}</Text>
-                        </View>
-
-                        <View style={{flexDirection: 'row'}}>
-                            <Text>Email           : </Text>
-                            <ScrollView>
-                                <Text>{Email}</Text>
-                            </ScrollView>
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Email           : </Text>
+                        <ScrollView>
+                            <Text>{Email}</Text>
+                        </ScrollView>
                     </View>
                 </View>
 
                 <Btn onPress={handleSubmit(_submit)}> Submit </Btn>
+
 
             </Card>
 

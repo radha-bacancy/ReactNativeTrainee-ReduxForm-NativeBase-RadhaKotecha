@@ -37,6 +37,7 @@ class UploadImage extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
+                console.log(response.uri);
                 this.setState({
                     source: { uri: response.uri }
                 });

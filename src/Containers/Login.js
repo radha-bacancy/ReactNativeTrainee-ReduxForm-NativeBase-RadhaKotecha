@@ -19,8 +19,8 @@ class Login extends Component{
             emailId: '',
             password: '',
             user: null,
-
-        }
+        };
+        console.disableYellowBox = true;
     }
 
     componentDidMount() {

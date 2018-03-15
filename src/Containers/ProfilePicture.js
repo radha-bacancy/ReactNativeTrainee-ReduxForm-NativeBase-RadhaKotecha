@@ -21,7 +21,7 @@ const ProfilePicture = (props) => {
 
     return(
         <View style={styles.container}>
-            <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
+            <Card style={{padding:10, borderRadius: 5}}>
 
                 <View>
                     <Field name='ProfilePic' component={UploadImage} validate={validate.required}/>

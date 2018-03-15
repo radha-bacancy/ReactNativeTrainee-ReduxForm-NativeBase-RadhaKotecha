@@ -22,9 +22,11 @@ const LoginCredentials = (props) => {
 
     return(
         <View style={styles.container}>
-            <Card style={{padding:10, borderRadius: 5, justifyContent: 'space-between'}}>
+            <Card style={{padding:10, borderRadius: 5}}>
 
                 <View>
+                    <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
+
                     <View>
                         <Field
                             name='Email'
@@ -57,8 +59,6 @@ const LoginCredentials = (props) => {
                         />
                     </View>
                 </View>
-
-                <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
 
             </Card>
         </View>
