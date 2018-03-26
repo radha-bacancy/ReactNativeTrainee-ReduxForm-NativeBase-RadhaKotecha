@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, ActionConst } from 'react-native-router-flux';
 import UserDetails from './src/Containers/UserDetails';
 import ProfilePicture from './src/Containers/ProfilePicture';
 import LoginCredentials from './src/Containers/LoginCredentials';
@@ -17,20 +17,25 @@ const Main = () => {
         >
             <Scene key='root'>
                 <Scene
-                    key="Login"
-                    component={Login}
-                    title="Login"
-                    initial
-                />
-                <Scene
                     key="Home"
                     component={Home}
                     title="Home"
+                    left={()=>null}
+                    type={ActionConst.RESET}
+                    initial
+                />
+                <Scene
+                    key="Login"
+                    component={Login}
+                    title="Login"
+                    type={ActionConst.RESET}
+                    left={()=>null}
                 />
                 <Scene
                     key="UserDetails"
                     component={UserDetails}
                     title="User Details"
+                    left={()=>null}
                 />
                 <Scene
                     key="ProfilePicture"

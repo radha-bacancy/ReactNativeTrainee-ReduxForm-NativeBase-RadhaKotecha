@@ -20,7 +20,6 @@ class Login extends Component{
             password: '',
             user: null,
         };
-        console.disableYellowBox = true;
     }
 
     componentDidMount() {

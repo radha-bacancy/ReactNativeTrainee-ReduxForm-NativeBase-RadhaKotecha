@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Card } from 'native-base'
 import {Field, reduxForm} from 'redux-form';
 import TextBox from '../Components/TextBox';
@@ -22,6 +22,10 @@ const _submit = (values) => {
 const UserDetails = (props) => {
 
     const { handleSubmit, pristine, submitting, invalid } = props;
+
+    const _login = () => {
+        Actions.Login();
+    };
 
     return(
 
@@ -97,6 +101,9 @@ const UserDetails = (props) => {
                 </ScrollView>
 
                 <Btn onPress={handleSubmit(_submit)} disabled={invalid || pristine || submitting}> Next </Btn>
+                <TouchableOpacity onPress={_login} style={{alignItems: 'center'}}>
+                    <Text>Already a User?</Text>
+                </TouchableOpacity>
 
             </Card>
         </View>

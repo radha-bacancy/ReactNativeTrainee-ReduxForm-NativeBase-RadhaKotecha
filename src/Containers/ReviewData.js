@@ -76,14 +76,25 @@ const ReviewData = (props) => {
                             Email: values.Email,
                             ProfilePic: url
                         });
-
                         ToastAndroid.showWithGravity(
                             'Sign Up Successful',
                             ToastAndroid.LONG,
                             ToastAndroid.BOTTOM,
                         );
-                        AsyncStorage.setItem('userData', JSON.stringify(usr));
-                        Actions.UserDetails()
+                        firebase.auth().signInWithEmailAndPassword(values.Email, values.Password)
+                            .then(() => {
+                                AsyncStorage.setItem('loggedIn', JSON.stringify({
+                                    FirstName: values.FirstName,
+                                    LastName: values.LastName,
+                                    Address: values.Address,
+                                    Gender: values.Gender,
+                                    Age: values.Age,
+                                    City: values.City,
+                                    Email: values.Email,
+                                    ProfilePic: url
+                                }));
+                                Actions.Home()
+                            });
                     })
                     .catch((err) => {
                         console.warn('err', err)
@@ -159,7 +170,6 @@ const ReviewData = (props) => {
 
                 <Btn onPress={handleSubmit(_submit)}> Submit </Btn>
 
-
             </Card>
 
         </View>
@@ -180,6 +190,6 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'ReactNativeTest',
-    destroyOnUnmount: false,
+    destroyOnUnmount: true,
     forceUnregisterOnUnmount: true,
 })(ReviewData));

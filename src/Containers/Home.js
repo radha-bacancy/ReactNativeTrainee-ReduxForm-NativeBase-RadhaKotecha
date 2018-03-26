@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, ScrollView } from 'react-native';
+import {View, Text, AsyncStorage, ScrollView, ToastAndroid} from 'react-native';
 import styles from "../Resources/Styles/styles";
 import { Card, Thumbnail } from 'native-base';
+import Btn from '../Components/Btn';
+import firebase from 'react-native-firebase';
+import { Actions } from 'react-native-router-flux';
 
 class Home extends Component{
 
@@ -17,22 +20,48 @@ class Home extends Component{
             City: '',
             ProfilePic: '',
             Email: '',
-        }
+        };
+        console.disableYellowBox = true;
+    };
+
+    _logout = async () => {
+        await firebase.auth().signOut()
+            .then(() => {
+                ToastAndroid.showWithGravity(
+                    'Logged Out',
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM
+                );
+                Actions.Login();
+                AsyncStorage.removeItem('loggedIn')
+            })
+            .catch((err) => {
+                alert(err)
+            })
     };
 
     async componentWillMount(){
-        let UserDetails = JSON.parse(await AsyncStorage.getItem('loggedIn'));
+        if(
+            await AsyncStorage.getItem('loggedIn') !== '' &&
+            await AsyncStorage.getItem('loggedIn') !== null &&
+            await AsyncStorage.getItem('loggedIn') !== undefined
+        ){
+            let UserDetails = JSON.parse(await AsyncStorage.getItem('loggedIn'));
 
-        this.setState({
-            FirstName: UserDetails.FirstName,
-            LastName: UserDetails.LastName,
-            Address: UserDetails.Address,
-            Gender: UserDetails.Gender,
-            Age: UserDetails.Age,
-            City: UserDetails.City,
-            Email: UserDetails.Email,
-            ProfilePic: {uri: UserDetails.ProfilePic},
-        })
+            this.setState({
+                FirstName: UserDetails.FirstName,
+                LastName: UserDetails.LastName,
+                Address: UserDetails.Address,
+                Gender: UserDetails.Gender,
+                Age: UserDetails.Age,
+                City: UserDetails.City,
+                Email: UserDetails.Email,
+                ProfilePic: {uri: UserDetails.ProfilePic},
+            })
+        }
+        else{
+            Actions.Login()
+        }
     }
 
     render(){
@@ -97,6 +126,8 @@ class Home extends Component{
                     </View>
 
                 </Card>
+
+                <Btn onPress={this._logout}>Log Out</Btn>
 
             </View>
         );
